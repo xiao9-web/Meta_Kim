@@ -18,7 +18,7 @@
     "fallback general agent with capability gap record"
   ],
   "summary": {
-    "totalAgents": 8,
+    "totalAgents": 9,
     "totalSkills": 7,
     "totalHooks": 13,
     "totalPlugins": 0,
@@ -89,6 +89,23 @@
         "path": "canonical/agents/meta-warden.md",
         "size": 28223,
         "modified": "2026-04-30T05:01:35.710Z"
+      },
+      "repo:canonical:personal-mentor": {
+        "id": "personal-mentor",
+        "type": "agents",
+        "namespace": "canonical",
+        "path": "canonical/agents/personal-mentor.md",
+        "capabilities": [
+          "personalized learning plan design",
+          "socratic teaching and guided questioning",
+          "cross-disciplinary knowledge connection",
+          "reading guidance and book discussion",
+          "learning progress tracking",
+          "weak spot identification and remediation",
+          "teaching strategy self-evolution"
+        ],
+        "domains": ["AI", "mathematics", "language", "psychology", "game theory", "physics"],
+        "modified": "2026-05-12T00:00:00.000Z"
       }
     },
     "skills": {
