@@ -48,6 +48,18 @@
         "default": false,
         "name": "Meta-Scout: Tool Discoverer 🔭",
         "workspace": "__REPO_ROOT__\\openclaw\\workspaces\\meta-scout"
+      },
+      {
+        "id": "personal-mentor",
+        "default": false,
+        "name": "Personal-Mentor: 资深学习导师",
+        "workspace": "__REPO_ROOT__\\openclaw\\workspaces\\personal-mentor"
+      },
+      {
+        "id": "personal-coder",
+        "default": false,
+        "name": "Personal-Coder: 编程执行专家",
+        "workspace": "__REPO_ROOT__\\openclaw\\workspaces\\personal-coder"
       }
     ]
   },
@@ -84,7 +96,9 @@
         "meta-librarian",
         "meta-conductor",
         "meta-prism",
-        "meta-scout"
+        "meta-scout",
+        "personal-mentor",
+        "personal-coder"
       ]
     }
   },
