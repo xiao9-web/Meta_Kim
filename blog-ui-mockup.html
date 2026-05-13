@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>xiao9 · 个人博客</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --teal:#3BBFC8;--teal-dark:#2a9ea6;--teal-light:#e8f8f9;
+  --purple:#a78bfa;--pink:#f9a8d4;--peach:#fed7aa;
+  --text-dark:#1a1a2e;--text-mid:#4a4a6a;--text-light:#9090b0;
+  --bg:#f7f8fc;--card:#fff;--border:#eef0f6;
+  --radius:14px;--shadow:0 2px 20px rgba(80,80,160,.08);
+  --shadow-hover:0 8px 32px rgba(80,80,160,.14);
+}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text-dark);font-size:15px;line-height:1.7}
+
+/* ════════════ NAV ════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;height:58px;
+  background:rgba(255,255,255,.88);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;z-index:1000;
+}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;font-size:17px;color:var(--text-dark)}
+.logo-mark{
+  width:34px;height:34px;border-radius:10px;
+  background:linear-gradient(135deg,#f9a8d4,#a78bfa,#67e8f9);
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+}
+.nav-links{display:flex;gap:6px;list-style:none}
+.nav-links a{
+  text-decoration:none;color:var(--text-mid);font-size:14px;
+  padding:6px 14px;border-radius:20px;transition:all .2s;
+}
+.nav-links a:hover,.nav-links a.active{background:var(--teal-light);color:var(--teal);font-weight:600}
+.nav-right{display:flex;align-items:center;gap:12px}
+.search-btn{
+  display:flex;align-items:center;gap:8px;background:var(--bg);
+  border:1px solid var(--border);border-radius:22px;padding:6px 16px;
+  font-size:13px;color:var(--text-light);cursor:pointer;transition:all .2s;
+}
+.search-btn:hover{border-color:var(--teal);color:var(--teal)}
+.search-btn kbd{background:var(--border);border-radius:4px;padding:1px 6px;font-size:11px;font-family:inherit}
+.theme-btn{
+  width:34px;height:34px;border-radius:50%;border:1px solid var(--border);
+  background:var(--bg);cursor:pointer;font-size:16px;
+  display:flex;align-items:center;justify-content:center;transition:all .2s;
+}
+.theme-btn:hover{background:var(--teal-light);border-color:var(--teal)}
+
+/* ════════════ PAGES ════════════ */
+.page{display:none}
+.page.active{display:block}
+
+/* ════════════ HERO ════════════ */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:80px 48px 60px;
+  position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 60% at 15% 25%,#ffd6e7cc 0%,transparent 55%),
+    radial-gradient(ellipse 60% 70% at 85% 15%,#c4b5fdbb 0%,transparent 55%),
+    radial-gradient(ellipse 80% 50% at 50% 90%,#bae6fdbb 0%,transparent 55%),
+    radial-gradient(ellipse 50% 50% at 70% 50%,#fed7aaaa 0%,transparent 50%),
+    radial-gradient(ellipse 40% 40% at 30% 70%,#d9f99daa 0%,transparent 50%),
+    #fdf4ff;
+  animation:aurora 10s ease-in-out infinite alternate;
+}
+@keyframes aurora{
+  0%{filter:hue-rotate(0deg) brightness(1)}
+  50%{filter:hue-rotate(8deg) brightness(1.03)}
+  100%{filter:hue-rotate(18deg) brightness(1.06)}
+}
+.hero-inner{position:relative;z-index:1;max-width:680px}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.95);
+  border-radius:22px;padding:6px 18px;font-size:13px;color:var(--text-mid);
+  margin-bottom:28px;backdrop-filter:blur(10px);
+}
+.hero-badge-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
+.hero h1{
+  font-size:58px;font-weight:900;line-height:1.15;
+  letter-spacing:-2px;margin-bottom:10px;color:var(--text-dark);
+}
+.hero h1 .gradient-text{
+  background:linear-gradient(135deg,#3BBFC8 0%,#a78bfa 50%,#f9a8d4 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-role{font-size:20px;color:var(--text-mid);margin-bottom:12px;font-weight:500}
+.hero-desc{
+  font-size:15px;color:var(--text-light);margin-bottom:40px;
+  max-width:500px;margin-left:auto;margin-right:auto;line-height:1.8;
+}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
+.btn{border-radius:26px;padding:12px 30px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .25s;border:none;display:inline-flex;align-items:center;gap:6px}
+.btn-primary{background:linear-gradient(135deg,#3BBFC8,#a78bfa);color:#fff;box-shadow:0 4px 20px rgba(59,191,200,.4)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(59,191,200,.5)}
+.btn-ghost{background:rgba(255,255,255,.8);color:var(--text-mid);border:1px solid var(--border);backdrop-filter:blur(8px)}
+.btn-ghost:hover{background:#fff;transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.08)}
+
+/* stats */
+.hero-stats{
+  position:relative;z-index:1;
+  display:flex;gap:0;background:rgba(255,255,255,.7);
+  border:1px solid rgba(255,255,255,.95);border-radius:20px;
+  backdrop-filter:blur(12px);overflow:hidden;
+}
+.stat{
+  flex:1;padding:20px 28px;text-align:center;
+  border-right:1px solid var(--border);
+}
+.stat:last-child{border-right:none}
+.stat-num{font-size:32px;font-weight:900;color:var(--text-dark)}
+.stat-num span{font-size:16px;color:var(--teal)}
+.stat-label{font-size:12px;color:var(--text-light);margin-top:2px}
+
+/* scroll indicator */
+.scroll-hint{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  z-index:1;display:flex;flex-direction:column;align-items:center;gap:6px;
+  color:var(--text-light);font-size:12px;animation:bounce 2s infinite;
+}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+.scroll-arrow{width:1px;height:28px;background:linear-gradient(to bottom,transparent,var(--text-light))}
+
+/* ════════════ FEATURES ════════════ */
+.features-section{padding:80px 48px;max-width:1140px;margin:0 auto}
+.section-label{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--teal);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:12px;
+}
+.section-label::before{content:'';width:24px;height:2px;background:var(--teal);border-radius:2px}
+.section-title{font-size:30px;font-weight:800;color:var(--text-dark);margin-bottom:8px}
+.section-sub{font-size:15px;color:var(--text-light);margin-bottom:40px}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feat{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:28px;cursor:pointer;transition:all .25s;
+}
+.feat:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover);border-color:transparent}
+.feat-icon{
+  width:48px;height:48px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;
+}
+.feat-icon.ai{background:linear-gradient(135deg,#e0f7fa,#b2ebf2)}
+.feat-icon.game{background:linear-gradient(135deg,#ede7f6,#d1c4e9)}
+.feat-icon.dev{background:linear-gradient(135deg,#e8f5e9,#c8e6c9)}
+.feat-icon.math{background:linear-gradient(135deg,#fff3e0,#ffe0b2)}
+.feat-icon.psy{background:linear-gradient(135deg,#fce4ec,#f8bbd9)}
+.feat-icon.book{background:linear-gradient(135deg,#e3f2fd,#bbdefb)}
+.feat h3{font-size:15px;font-weight:700;color:var(--text-dark);margin-bottom:8px}
+.feat p{font-size:13px;color:var(--text-light);line-height:1.65}
+.feat-arrow{display:inline-flex;align-items:center;gap:4px;color:var(--teal);font-size:12px;font-weight:600;margin-top:14px;opacity:0;transition:opacity .2s}
+.feat:hover .feat-arrow{opacity:1}
+
+/* ════════════ RECENT ════════════ */
+.recent-section{padding:0 48px 80px;max-width:1140px;margin:0 auto}
+.section-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:24px}
+.section-header h2{font-size:22px;font-weight:800}
+.see-all{font-size:13px;color:var(--teal);text-decoration:none;font-weight:600}
+.see-all:hover{text-decoration:underline}
+.recent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.recent-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:24px;cursor:pointer;transition:all .25s;text-decoration:none;color:inherit;display:block;
+}
+.recent-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover);border-color:transparent}
+.card-category{
+  display:inline-block;padding:3px 12px;border-radius:12px;
+  font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:12px;
+}
+.cat-ai{background:#e0f7fa;color:#0097a7}
+.cat-game{background:#ede7f6;color:#7b1fa2}
+.cat-dev{background:#e8f5e9;color:#2e7d32}
+.cat-psy{background:#fce4ec;color:#c2185b}
+.cat-math{background:#fff3e0;color:#e65100}
+.cat-book{background:#e3f2fd;color:#1565c0}
+.recent-card h3{font-size:15px;font-weight:700;line-height:1.45;margin-bottom:8px}
+.recent-card p{font-size:13px;color:var(--text-light);line-height:1.6;margin-bottom:16px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card-meta{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--text-light)}
+.card-meta-left{display:flex;align-items:center;gap:10px}
+.reading-time{display:flex;align-items:center;gap:3px}
+
+/* ════════════ BLOG LIST PAGE ════════════ */
+.blog-page{padding:88px 48px 72px;max-width:1140px;margin:0 auto}
+.blog-layout{display:grid;grid-template-columns:1fr 300px;gap:32px;align-items:start}
+.blog-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.filter-btn{
+  padding:6px 16px;border-radius:18px;font-size:13px;border:1px solid var(--border);
+  background:var(--card);color:var(--text-mid);cursor:pointer;transition:all .2s;font-weight:500;
+}
+.filter-btn.active,.filter-btn:hover{background:var(--teal);border-color:var(--teal);color:#fff}
+.post-list{display:flex;flex-direction:column;gap:12px}
+.post-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:24px;cursor:pointer;transition:all .2s;text-decoration:none;color:inherit;display:block;
+}
+.post-card:hover{transform:translateX(6px);box-shadow:var(--shadow);border-color:var(--teal-light)}
+.post-card-inner{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+.post-card-text{flex:1}
+.post-card h3{font-size:16px;font-weight:700;margin-bottom:6px;line-height:1.4}
+.post-card p{font-size:13px;color:var(--text-light);margin-bottom:12px;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.post-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tag{display:inline-block;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:600}
+.tag-teal{background:#e0f7fa;color:#0097a7}
+.tag-purple{background:#ede7f6;color:#7b1fa2}
+.tag-orange{background:#fff3e0;color:#e65100}
+.tag-green{background:#e8f5e9;color:#2e7d32}
+.tag-pink{background:#fce4ec;color:#c2185b}
+.tag-blue{background:#e3f2fd;color:#1565c0}
+.post-footer{display:flex;align-items:center;gap:16px;font-size:12px;color:var(--text-light)}
+.post-date,.post-time{display:flex;align-items:center;gap:4px}
+.post-cover{
+  width:88px;height:72px;border-radius:10px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:32px;
+}
+.cover-ai{background:linear-gradient(135deg,#e0f7fa,#b2ebf2)}
+.cover-game{background:linear-gradient(135deg,#ede7f6,#d1c4e9)}
+.cover-dev{background:linear-gradient(135deg,#e8f5e9,#c8e6c9)}
+.cover-psy{background:linear-gradient(135deg,#fce4ec,#f8bbd9)}
+.cover-math{background:linear-gradient(135deg,#fff3e0,#ffe0b2)}
+.cover-book{background:linear-gradient(135deg,#e3f2fd,#bbdefb)}
+
+/* ════════════ SIDEBAR ════════════ */
+.sidebar{display:flex;flex-direction:column;gap:16px}
+.sb-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.sb-profile{padding:24px;text-align:center}
+.sb-avatar{
+  width:76px;height:76px;border-radius:50%;margin:0 auto 14px;
+  background:linear-gradient(135deg,#f9a8d4,#a78bfa,#67e8f9);
+  display:flex;align-items:center;justify-content:center;font-size:36px;
+}
+.sb-name{font-size:17px;font-weight:800;margin-bottom:4px}
+.sb-bio{font-size:13px;color:var(--text-light);line-height:1.5;margin-bottom:14px}
+.sb-location{font-size:12px;color:var(--text-light);display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:16px}
+.sb-links{display:flex;justify-content:center;gap:10px}
+.sb-link{
+  width:34px;height:34px;border-radius:50%;
+  background:var(--bg);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:15px;
+  cursor:pointer;transition:all .2s;text-decoration:none;
+}
+.sb-link:hover{background:var(--teal-light);border-color:var(--teal);transform:scale(1.1)}
+.sb-section{padding:18px 20px}
+.sb-section + .sb-section{border-top:1px solid var(--border)}
+.sb-section h4{font-size:12px;font-weight:700;color:var(--text-light);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+.sb-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:9px 0;border-bottom:1px solid var(--border);cursor:pointer;
+  font-size:14px;color:var(--text-mid);transition:color .15s;
+}
+.sb-item:last-child{border-bottom:none}
+.sb-item:hover{color:var(--teal)}
+.sb-item-right{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-light)}
+.tag-cloud{display:flex;flex-wrap:wrap;gap:7px}
+
+/* ════════════ ARTICLE PAGE ════════════ */
+.article-page{padding:88px 48px 72px;max-width:1140px;margin:0 auto}
+.article-layout{display:grid;grid-template-columns:1fr 260px;gap:40px;align-items:start}
+.article-header{margin-bottom:32px}
+.article-breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-light);margin-bottom:20px}
+.article-breadcrumb a{color:var(--teal);text-decoration:none}
+.article-breadcrumb a:hover{text-decoration:underline}
+.article-breadcrumb span{color:var(--text-light)}
+.article-title{font-size:36px;font-weight:900;line-height:1.25;letter-spacing:-1px;margin-bottom:16px}
+.article-subtitle{font-size:17px;color:var(--text-mid);margin-bottom:20px;line-height:1.6}
+.article-meta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:16px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:32px}
+.article-meta-item{display:flex;align-items:center;gap:5px;font-size:13px;color:var(--text-light)}
+.article-content h2{font-size:22px;font-weight:800;margin:36px 0 14px;color:var(--text-dark)}
+.article-content h3{font-size:18px;font-weight:700;margin:28px 0 10px;color:var(--text-dark)}
+.article-content p{font-size:15px;color:var(--text-mid);line-height:1.85;margin-bottom:18px}
+.article-content blockquote{
+  border-left:3px solid var(--teal);background:var(--teal-light);
+  border-radius:0 10px 10px 0;padding:16px 20px;margin:24px 0;
+  font-style:italic;color:var(--text-mid);
+}
+.article-content .code-block{
+  background:#1a1a2e;color:#e2e8f0;border-radius:10px;
+  padding:20px;font-family:'SF Mono',Consolas,monospace;font-size:13px;
+  line-height:1.6;margin:24px 0;overflow-x:auto;
+}
+.article-content .code-block .comment{color:#718096}
+.article-content .code-block .keyword{color:#a78bfa}
+.article-content .code-block .string{color:#68d391}
+.article-content .code-block .number{color:#f6ad55}
+.article-content .highlight-box{
+  background:linear-gradient(135deg,#fdf4ff,#e0f7fa);
+  border:1px solid #e0d0f0;border-radius:12px;padding:20px 24px;margin:24px 0;
+}
+.article-content .highlight-box h4{color:var(--teal);font-size:14px;font-weight:700;margin-bottom:8px}
+.article-content .highlight-box p{margin-bottom:0;font-size:14px}
+.article-content ul{padding-left:20px;margin-bottom:18px}
+.article-content li{font-size:15px;color:var(--text-mid);line-height:1.8;margin-bottom:4px}
+
+/* toc */
+.toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;position:sticky;top:76px}
+.toc h4{font-size:12px;font-weight:700;color:var(--text-light);letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px}
+.toc-item{display:block;padding:6px 0;font-size:13px;color:var(--text-mid);text-decoration:none;border-left:2px solid transparent;padding-left:10px;transition:all .2s}
+.toc-item:hover,.toc-item.active{color:var(--teal);border-left-color:var(--teal)}
+.toc-item.h3{padding-left:20px;font-size:12px}
+.toc-divider{height:1px;background:var(--border);margin:12px 0}
+
+/* ════════════ ABOUT PAGE ════════════ */
+.about-page{padding:88px 48px 72px;max-width:900px;margin:0 auto}
+.about-hero{
+  display:flex;align-items:center;gap:40px;margin-bottom:56px;
+  background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px 40px;
+}
+.about-avatar-wrap{flex-shrink:0}
+.about-avatar{
+  width:120px;height:120px;border-radius:28px;
+  background:linear-gradient(135deg,#f9a8d4,#a78bfa,#67e8f9);
+  display:flex;align-items:center;justify-content:center;font-size:56px;
+}
+.about-name{font-size:30px;font-weight:900;margin-bottom:6px}
+.about-title{font-size:15px;color:var(--teal);font-weight:600;margin-bottom:12px}
+.about-intro{font-size:15px;color:var(--text-mid);line-height:1.75;margin-bottom:20px}
+.about-tags{display:flex;gap:8px;flex-wrap:wrap}
+.about-tag{
+  padding:5px 14px;border-radius:14px;font-size:13px;font-weight:600;
+  background:var(--bg);border:1px solid var(--border);color:var(--text-mid);
+}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:40px}
+.about-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.about-card h3{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.timeline{display:flex;flex-direction:column;gap:14px}
+.tl-item{display:flex;gap:14px;align-items:flex-start}
+.tl-dot{width:8px;height:8px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:7px}
+.tl-content h4{font-size:14px;font-weight:600;margin-bottom:2px}
+.tl-content p{font-size:12px;color:var(--text-light)}
+.skills-list{display:flex;flex-direction:column;gap:10px}
+.skill-row{display:flex;align-items:center;gap:12px}
+.skill-name{font-size:13px;color:var(--text-mid);width:80px;flex-shrink:0}
+.skill-bar{flex:1;height:6px;background:var(--bg);border-radius:3px;overflow:hidden}
+.skill-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#3BBFC8,#a78bfa)}
+.contact-links{display:flex;flex-direction:column;gap:10px}
+.contact-link{
+  display:flex;align-items:center;gap:12px;padding:12px 16px;
+  border-radius:10px;background:var(--bg);border:1px solid var(--border);
+  text-decoration:none;color:var(--text-mid);font-size:14px;transition:all .2s;
+}
+.contact-link:hover{background:var(--teal-light);border-color:var(--teal);color:var(--teal)}
+.contact-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+
+/* ════════════ NOTES PAGE ════════════ */
+.notes-page{padding:88px 48px 72px;max-width:1140px;margin:0 auto}
+.notes-tabs{display:flex;gap:6px;margin-bottom:28px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:6px}
+.notes-tab{
+  flex:1;padding:8px;border-radius:10px;font-size:13px;font-weight:600;
+  text-align:center;cursor:pointer;color:var(--text-mid);transition:all .2s;
+}
+.notes-tab.active{background:var(--teal);color:#fff}
+.notes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.note-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px;cursor:pointer;transition:all .25s;
+}
+.note-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover);border-color:transparent}
+.note-icon{font-size:28px;margin-bottom:12px}
+.note-card h3{font-size:15px;font-weight:700;margin-bottom:6px;line-height:1.4}
+.note-card p{font-size:13px;color:var(--text-light);line-height:1.6;margin-bottom:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.note-footer{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--text-light)}
+.note-type-badge{padding:2px 10px;border-radius:10px;font-size:11px;font-weight:700}
+
+/* ════════════ FOOTER ════════════ */
+footer{
+  background:var(--card);border-top:1px solid var(--border);
+  padding:32px 48px;margin-top:40px;
+}
+.footer-inner{max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-brand{display:flex;align-items:center;gap:10px}
+.footer-brand strong{font-size:15px}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:13px;color:var(--text-light);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--teal)}
+.footer-copy{font-size:12px;color:var(--text-light)}
+
+/* ════════════ UTILS ════════════ */
+.divider{height:1px;background:var(--border);margin:60px 0}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo" onclick="showPage('home')">
+    <div class="logo-mark">🦊</div>
+    xiao9
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" id="nav-home" class="active" onclick="showPage('home');return false">首页</a></li>
+    <li><a href="#" id="nav-blog" onclick="showPage('blog');return false">文章</a></li>
+    <li><a href="#" id="nav-notes" onclick="showPage('notes');return false">笔记</a></li>
+    <li><a href="#" id="nav-about" onclick="showPage('about');return false">关于</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="search-btn">🔍 搜索文章 <kbd>⌘K</kbd></div>
+    <button class="theme-btn">☀️</button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     PAGE: HOME
+════════════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-inner">
+      <div class="hero-badge"><span class="hero-badge-dot"></span>正在学习 · 持续输出中</div>
+      <h1>Hi, I'm<br><span class="gradient-text">xiao9</span></h1>
+      <div class="hero-role">开发者 · 学习者 · 记录者</div>
+      <div class="hero-desc">在这里记录我对 AI、博弈论、代码和世界的思考。<br>相信知识的连接比知识本身更有价值。</div>
+      <div class="hero-btns">
+        <a href="#" class="btn btn-primary" onclick="showPage('blog');return false">📖 查看文章</a>
+        <a href="#" class="btn btn-ghost" onclick="showPage('notes');return false">📝 浏览笔记</a>
+        <a href="#" class="btn btn-ghost">🐙 GitHub</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num">24<span>篇</span></div><div class="stat-label">文章</div></div>
+        <div class="stat"><div class="stat-num">68<span>条</span></div><div class="stat-label">笔记</div></div>
+        <div class="stat"><div class="stat-num">5<span>个</span></div><div class="stat-label">项目</div></div>
+        <div class="stat"><div class="stat-num">6<span>个</span></div><div class="stat-label">领域</div></div>
+      </div>
+    </div>
+    <div class="scroll-hint"><div class="scroll-arrow"></div>向下滚动</div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="features-section">
+    <div class="section-label">我在探索的</div>
+    <div class="section-title">六个感兴趣的领域</div>
+    <div class="section-sub">不同学科之间的连接，往往比单一学科本身更有趣</div>
+    <div class="feature-grid">
+      <div class="feat">
+        <div class="feat-icon ai">🤖</div>
+        <h3>AI 与大语言模型</h3>
+        <p>Transformer 原理、Agent 架构、如何让 AI 真正帮到我的工作，而不是制造更多麻烦。</p>
+        <div class="feat-arrow">查看相关文章 →</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon game">🎲</div>
+        <h3>博弈论与决策</h3>
+        <p>纳什均衡、信息不对称、协调博弈——理性与非理性之间的边界在哪里？</p>
+        <div class="feat-arrow">查看相关文章 →</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon dev">💻</div>
+        <h3>软件开发实践</h3>
+        <p>从 0 到 1 构建产品，工程思维、架构决策，以及那些书上不会教你的坑。</p>
+        <div class="feat-arrow">查看相关文章 →</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon math">📐</div>
+        <h3>数学与逻辑结构</h3>
+        <p>线性代数、概率论——数学不是工具，是一种看世界的方式。</p>
+        <div class="feat-arrow">查看相关文章 →</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon psy">🧠</div>
+        <h3>心理学与认知偏差</h3>
+        <p>我们以为自己在理性决策，实际上大脑在玩把戏——认知偏差图谱。</p>
+        <div class="feat-arrow">查看相关文章 →</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon book">📚</div>
+        <h3>读书与知识连接</h3>
+        <p>读书笔记不是总结，是对话。每本书都在和另一本书说话。</p>
+        <div class="feat-arrow">查看相关文章 →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RECENT POSTS -->
+  <div class="recent-section">
+    <div class="section-header">
+      <h2>最近在写</h2>
+      <a href="#" class="see-all" onclick="showPage('blog');return false">全部文章 →</a>
+    </div>
+    <div class="recent-grid">
+      <a href="#" class="recent-card" onclick="showPage('article');return false">
+        <div class="card-category cat-game">博弈论</div>
+        <h3>纳什均衡到底是什么？用 3 个日常场景讲清楚</h3>
+        <p>教科书总把它讲得像高数题，但其实每天通勤选哪条路都是博弈。这篇重新用生活场景解释一遍。</p>
+        <div class="card-meta"><div class="card-meta-left"><span>📅 2026-05-10</span><span class="reading-time">☕ 8 分钟</span></div></div>
+      </a>
+      <a href="#" class="recent-card">
+        <div class="card-category cat-ai">AI</div>
+        <h3>用 Meta_Kim 管理 AI 工作流：从混乱到有章可循</h3>
+        <p>一个 AI 治理 AI 的框架实践，从随机 prompt 到有结构的 agent 系统，生产力提升了什么？</p>
+        <div class="card-meta"><div class="card-meta-left"><span>📅 2026-05-06</span><span class="reading-time">☕ 12 分钟</span></div></div>
+      </a>
+      <a href="#" class="recent-card">
+        <div class="card-category cat-dev">开发</div>
+        <h3>website-builder 开发日记：技术选型的纠结</h3>
+        <p>选 Next.js 还是 Nuxt？用 Tailwind 还是手写 CSS？每个选择的背后是什么逻辑。</p>
+        <div class="card-meta"><div class="card-meta-left"><span>📅 2026-04-28</span><span class="reading-time">☕ 6 分钟</span></div></div>
+      </a>
+    </div>
+  </div>
+
+</div><!-- /page-home -->
+
+<!-- ══════════════════════════════════════
+     PAGE: BLOG
+════════════════════════════════════════ -->
+<div id="page-blog" class="page">
+<div class="blog-page">
+  <div style="margin-bottom:28px">
+    <div class="section-label">所有文章</div>
+    <div class="section-title">文章列表</div>
+    <div class="section-sub">24 篇 · 持续更新</div>
+  </div>
+  <div class="blog-layout">
+    <div>
+      <div class="blog-filters">
+        <button class="filter-btn active">全部</button>
+        <button class="filter-btn">AI</button>
+        <button class="filter-btn">博弈论</button>
+        <button class="filter-btn">开发</button>
+        <button class="filter-btn">心理学</button>
+        <button class="filter-btn">数学</button>
+        <button class="filter-btn">读书笔记</button>
+      </div>
+      <div class="post-list">
+
+        <a href="#" class="post-card" onclick="showPage('article');return false">
+          <div class="post-card-inner">
+            <div class="post-card-text">
+              <div class="post-tags"><span class="tag tag-purple">博弈论</span><span class="tag tag-teal">入门</span></div>
+              <h3>纳什均衡到底是什么？用 3 个日常场景讲清楚</h3>
+              <p>教科书总把它讲得像高数题，但其实每天通勤选哪条路都是博弈。这篇重新用生活场景解释一遍，不需要数学基础。</p>
+              <div class="post-footer"><span class="post-date">📅 2026-05-10</span><span class="post-time">☕ 8 分钟阅读</span></div>
+            </div>
+            <div class="post-cover cover-game">🎲</div>
+          </div>
+        </a>
+
+        <a href="#" class="post-card">
+          <div class="post-card-inner">
+            <div class="post-card-text">
+              <div class="post-tags"><span class="tag tag-teal">AI</span><span class="tag tag-green">工具</span></div>
+              <h3>用 Meta_Kim 管理 AI 工作流：从混乱到有章可循</h3>
+              <p>一个用 AI 治理 AI 的框架实践，从随机 prompt 到有结构的 agent 系统，生产力提升了什么？</p>
+              <div class="post-footer"><span class="post-date">📅 2026-05-06</span><span class="post-time">☕ 12 分钟阅读</span></div>
+            </div>
+            <div class="post-cover cover-ai">🤖</div>
+          </div>
+        </a>
+
+        <a href="#" class="post-card">
+          <div class="post-card-inner">
+            <div class="post-card-text">
+              <div class="post-tags"><span class="tag tag-orange">开发</span><span class="tag tag-green">项目</span></div>
+              <h3>website-builder 开发日记：技术选型的纠结</h3>
+              <p>选 Next.js 还是 Nuxt？用 Tailwind 还是手写 CSS？每个选择的背后是什么逻辑。</p>
+              <div class="post-footer"><span class="post-date">📅 2026-04-28</span><span class="post-time">☕ 6 分钟阅读</span></div>
+            </div>
+            <div class="post-cover cover-dev">💻</div>
+          </div>
+        </a>
+
+        <a href="#" class="post-card">
+          <div class="post-card-inner">
+            <div class="post-card-text">
+              <div class="post-tags"><span class="tag tag-pink">心理学</span><span class="tag tag-purple">认知</span></div>
+              <h3>认知偏差图谱：我们为什么总是做出"非理性"决定</h3>
+              <p>整理了 20 个最常见的认知偏差，以及它们如何在不知不觉中影响我们的判断和选择。</p>
+              <div class="post-footer"><span class="post-date">📅 2026-04-15</span><span class="post-time">☕ 10 分钟阅读</span></div>
+            </div>
+            <div class="post-cover cover-psy">🧠</div>
+          </div>
+        </a>
+
+        <a href="#" class="post-card">
+          <div class="post-card-inner">
+            <div class="post-card-text">
+              <div class="post-tags"><span class="tag tag-blue">读书笔记</span></div>
+              <h3>《思考，快与慢》：系统 1 和系统 2 在我生活里的真实案例</h3>
+              <p>卡尼曼的理论不难懂，难的是在自己身上找到证据。读完之后我记录了一周的决策日志。</p>
+              <div class="post-footer"><span class="post-date">📅 2026-04-02</span><span class="post-time">☕ 15 分钟阅读</span></div>
+            </div>
+            <div class="post-cover cover-book">📚</div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sb-card">
+        <div class="sb-profile">
+          <div class="sb-avatar">🦊</div>
+          <div class="sb-name">xiao9</div>
+          <div class="sb-bio">开发者 · 学习者<br>关注 AI、博弈论与人类行为的交叉</div>
+          <div class="sb-location">📍 深圳，中国</div>
+          <div class="sb-links">
+            <a href="#" class="sb-link">🐙</a>
+            <a href="#" class="sb-link">🐦</a>
+            <a href="#" class="sb-link">📧</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sb-card">
+        <div class="sb-section">
+          <h4>📂 分类</h4>
+          <div class="sb-item">AI 与机器学习<div class="sb-item-right"><span class="tag tag-teal">8</span>→</div></div>
+          <div class="sb-item">博弈论<div class="sb-item-right"><span class="tag tag-purple">5</span>→</div></div>
+          <div class="sb-item">软件开发<div class="sb-item-right"><span class="tag tag-orange">7</span>→</div></div>
+          <div class="sb-item">心理学<div class="sb-item-right"><span class="tag tag-pink">4</span>→</div></div>
+        </div>
+      </div>
+
+      <div class="sb-card">
+        <div class="sb-section">
+          <h4>🏷️ 热门标签</h4>
+          <div class="tag-cloud">
+            <span class="tag tag-teal" style="cursor:pointer">AI</span>
+            <span class="tag tag-purple" style="cursor:pointer">博弈论</span>
+            <span class="tag tag-orange" style="cursor:pointer">开发</span>
+            <span class="tag tag-green" style="cursor:pointer">工具</span>
+            <span class="tag tag-pink" style="cursor:pointer">心理学</span>
+            <span class="tag tag-blue" style="cursor:pointer">读书</span>
+            <span class="tag tag-teal" style="cursor:pointer">学习</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sb-card">
+        <div class="sb-section">
+          <h4>📅 归档</h4>
+          <div class="sb-item">2026 年 5 月<div class="sb-item-right">4 →</div></div>
+          <div class="sb-item">2026 年 4 月<div class="sb-item-right">8 →</div></div>
+          <div class="sb-item">2026 年 3 月<div class="sb-item-right">6 →</div></div>
+          <div class="sb-item">2026 年 2 月<div class="sb-item-right">4 →</div></div>
+          <div class="sb-item">2026 年 1 月<div class="sb-item-right">2 →</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div><!-- /page-blog -->
+
+<!-- ══════════════════════════════════════
+     PAGE: ARTICLE
+════════════════════════════════════════ -->
+<div id="page-article" class="page">
+<div class="article-page">
+  <div class="article-layout">
+    <div>
+      <div class="article-header">
+        <div class="article-breadcrumb">
+          <a href="#" onclick="showPage('home');return false">首页</a>
+          <span>/</span>
+          <a href="#" onclick="showPage('blog');return false">文章</a>
+          <span>/</span>
+          <span>纳什均衡</span>
+        </div>
+        <div class="post-tags" style="margin-bottom:16px">
+          <span class="tag tag-purple">博弈论</span>
+          <span class="tag tag-teal">入门</span>
+        </div>
+        <div class="article-title">纳什均衡到底是什么？用 3 个日常场景讲清楚</div>
+        <div class="article-subtitle">教科书把它讲得像高数题，但其实每天通勤选哪条路都是博弈。这篇不需要数学基础。</div>
+        <div class="article-meta">
+          <div class="article-meta-item">📅 2026-05-10</div>
+          <div class="article-meta-item">☕ 8 分钟阅读</div>
+          <div class="article-meta-item">👤 xiao9</div>
+        </div>
+      </div>
+
+      <div class="article-content">
+        <p>我第一次看到"纳什均衡"这个词，是在一本博弈论教材的第三章。旁边配了一堆数学符号，我直接翻篇了。</p>
+        <p>后来看了《美丽心灵》，才意识到这个概念其实描述的是很日常的东西——<strong>每个人都在做最好的选择，但结果可能对所有人都不好。</strong></p>
+
+        <div class="highlight-box">
+          <h4>🎯 核心定义（人话版）</h4>
+          <p>纳什均衡是一种状态：在这个状态下，没有人能通过单方面改变自己的策略来让自己变得更好。每个人的选择都是对其他人选择的最优回应。</p>
+        </div>
+
+        <h2>场景一：通勤路线选择</h2>
+        <p>假设你和同事每天都要从家到公司，有两条路：高速路（快但堵）和老路（慢但不堵）。</p>
+        <p>如果所有人都选高速，高速就堵，老路反而快。如果所有人都选老路，老路就堵，高速反而快。</p>
+        <blockquote>
+          最终会出现一个"均衡"：一部分人走高速，一部分人走老路，两条路的通行时间大致相等。这时候，没有人能通过单方面换路来节省时间。这就是纳什均衡。
+        </blockquote>
+
+        <h2>场景二：餐厅选择</h2>
+        <p>商场里有两家餐厅，A 和 B。假设大多数人在 A 排队，你去 B 能更快吃到饭。但如果大家都这么想，B 也开始排队……</p>
+
+        <div class="code-block"><span class="comment">// 伪代码：博弈过程</span>
+<span class="keyword">while</span> (有人能通过换选择获益) {
+  <span class="keyword">for</span> (每个人) {
+    <span class="keyword">if</span> (换到另一家更快) {
+      选择另一家<span class="string">()</span>
+    }
+  }
+}
+<span class="comment">// 循环结束时，到达纳什均衡</span></div>
+
+        <h2>场景三：经典囚徒困境</h2>
+        <p>两个嫌疑人被单独审讯。每个人可以选择"坦白"或"沉默"。</p>
+        <ul>
+          <li>两人都沉默 → 各判 1 年</li>
+          <li>两人都坦白 → 各判 5 年</li>
+          <li>一人坦白、一人沉默 → 坦白者无罪，沉默者判 10 年</li>
+        </ul>
+        <p>无论对方怎么选，"坦白"对自己都是更优选择。最终两人都坦白，各判 5 年——这是纳什均衡，但不是最优解（两人都沉默只判 1 年）。</p>
+
+        <h2>为什么这个概念重要？</h2>
+        <p>纳什均衡告诉我们：个体理性 ≠ 集体最优。每个人都在做"最聪明"的选择，结果可能对所有人都更差。</p>
+        <p>这个洞察解释了很多社会现象：军备竞赛、价格战、流量焦虑……每个参与者都被困在一个"无法单独逃脱"的均衡里。</p>
+
+        <div class="highlight-box">
+          <h4>💡 和心理学的连接</h4>
+          <p>认知偏差里的"从众效应"其实和纳什均衡有关：当你看到所有人都选 A，你选 A 是理性的（降低信息搜索成本）。但如果 A 本来不是最优选择，大家集体陷入了次优均衡。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOC -->
+    <div>
+      <div class="toc">
+        <h4>目录</h4>
+        <a href="#" class="toc-item active">核心定义</a>
+        <a href="#" class="toc-item">场景一：通勤路线</a>
+        <a href="#" class="toc-item">场景二：餐厅选择</a>
+        <a href="#" class="toc-item">场景三：囚徒困境</a>
+        <a href="#" class="toc-item">为什么重要？</a>
+        <div class="toc-divider"></div>
+        <a href="#" class="toc-item h3" style="color:var(--text-light)">和心理学的连接</a>
+      </div>
+    </div>
+  </div>
+</div>
+</div><!-- /page-article -->
+
+<!-- ══════════════════════════════════════
+     PAGE: NOTES
+════════════════════════════════════════ -->
+<div id="page-notes" class="page">
+<div class="notes-page">
+  <div style="margin-bottom:28px">
+    <div class="section-label">我的笔记</div>
+    <div class="section-title">知识沉淀</div>
+    <div class="section-sub">68 条笔记 · 读书、学习、技术三类</div>
+  </div>
+  <div class="notes-tabs">
+    <div class="notes-tab active">全部 68</div>
+    <div class="notes-tab">📖 读书笔记 24</div>
+    <div class="notes-tab">🎓 学习对话 31</div>
+    <div class="notes-tab">🔧 技术笔记 13</div>
+  </div>
+  <div class="notes-grid">
+
+    <div class="note-card">
+      <div class="note-icon">📖</div>
+      <h3>《思考，快与慢》· 第三章：启发式与偏差</h3>
+      <p>系统 1 的自动化思考如何产生锚定效应，以及如何在日常决策中识别它。</p>
+      <div class="note-footer">
+        <span class="note-type-badge tag tag-blue">读书笔记</span>
+        <span>2026-05-08</span>
+      </div>
+    </div>
+
+    <div class="note-card">
+      <div class="note-icon">🎓</div>
+      <h3>纳什均衡 — 和 Claude 的对话整理</h3>
+      <p>用囚徒困境、协调博弈、反复博弈三个场景理解均衡的形成条件。</p>
+      <div class="note-footer">
+        <span class="note-type-badge tag tag-purple">学习对话</span>
+        <span>2026-05-10</span>
+      </div>
+    </div>
+
+    <div class="note-card">
+      <div class="note-icon">🔧</div>
+      <h3>React useEffect 的依赖数组陷阱</h3>
+      <p>为什么闭包导致依赖数组的值总是旧的，以及 useCallback 和 useRef 的解法。</p>
+      <div class="note-footer">
+        <span class="note-type-badge tag tag-orange">技术笔记</span>
+        <span>2026-05-05</span>
+      </div>
+    </div>
+
+    <div class="note-card">
+      <div class="note-icon">🎓</div>
+      <h3>Transformer 注意力机制 — 直觉理解</h3>
+      <p>不用数学公式，用"查字典"的比喻理解 Q、K、V 是什么，以及为什么要做缩放点积。</p>
+      <div class="note-footer">
+        <span class="note-type-badge tag tag-teal">学习对话</span>
+        <span>2026-05-03</span>
+      </div>
+    </div>
+
+    <div class="note-card">
+      <div class="note-icon">📖</div>
+      <h3>《影响力》· 六大说服原理速查</h3>
+      <p>互惠、承诺、社会认同、权威、喜好、稀缺——每个原理的现实案例和防御方法。</p>
+      <div class="note-footer">
+        <span class="note-type-badge tag tag-blue">读书笔记</span>
+        <span>2026-04-28</span>
+      </div>
+    </div>
+
+    <div class="note-card">
+      <div class="note-icon">🔧</div>
+      <h3>Git rebase vs merge 的选择逻辑</h3>
+      <p>什么情况下用 rebase 保持线性历史，什么情况下用 merge 保留分支上下文。</p>
+      <div class="note-footer">
+        <span class="note-type-badge tag tag-orange">技术笔记</span>
+        <span>2026-04-22</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div><!-- /page-notes -->
+
+<!-- ══════════════════════════════════════
+     PAGE: ABOUT
+════════════════════════════════════════ -->
+<div id="page-about" class="page">
+<div class="about-page">
+  <div class="about-hero">
+    <div class="about-avatar-wrap">
+      <div class="about-avatar">🦊</div>
+    </div>
+    <div>
+      <div class="about-name">xiao9</div>
+      <div class="about-title">开发者 · 学习者 · 记录者</div>
+      <div class="about-intro">
+        我是 xiao9，一个热衷于在不同学科之间寻找连接的人。白天写代码，晚上思考博弈论、读心理学、学数学。<br><br>
+        我相信，真正有趣的洞见往往藏在学科的边界处——当 AI 遇到博弈论，当心理学遇到经济决策，当数学遇到日常逻辑。
+      </div>
+      <div class="about-tags">
+        <span class="about-tag">🤖 AI</span>
+        <span class="about-tag">🎲 博弈论</span>
+        <span class="about-tag">💻 开发</span>
+        <span class="about-tag">🧠 心理学</span>
+        <span class="about-tag">📐 数学</span>
+        <span class="about-tag">📚 阅读</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-card">
+      <h3>🕐 学习轨迹</h3>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content"><h4>开始认真学 AI</h4><p>2026 · 深入理解 LLM 原理和 Agent 架构</p></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content"><h4>迷上博弈论</h4><p>2025 · 从纳什均衡到信息经济学</p></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content"><h4>开始写博客</h4><p>2025 · 把学到的东西用自己的话重新讲一遍</p></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content"><h4>开始写代码</h4><p>2024 · 第一个认真的项目 website-builder</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-card">
+      <h3>🛠️ 技能栈</h3>
+      <div class="skills-list">
+        <div class="skill-row"><span class="skill-name">JavaScript</span><div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div></div>
+        <div class="skill-row"><span class="skill-name">React</span><div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div></div>
+        <div class="skill-row"><span class="skill-name">Python</span><div class="skill-bar"><div class="skill-fill" style="width:55%"></div></div></div>
+        <div class="skill-row"><span class="skill-name">AI/Prompt</span><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
+        <div class="skill-row"><span class="skill-name">博弈论</span><div class="skill-bar"><div class="skill-fill" style="width:45%"></div></div></div>
+        <div class="skill-row"><span class="skill-name">线性代数</span><div class="skill-bar"><div class="skill-fill" style="width:35%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="about-card">
+      <h3>📫 联系我</h3>
+      <div class="contact-links">
+        <a href="#" class="contact-link">
+          <div class="contact-icon" style="background:#e8f5e9">🐙</div>
+          GitHub · xiao9-web
+        </a>
+        <a href="#" class="contact-link">
+          <div class="contact-icon" style="background:#e3f2fd">🐦</div>
+          Twitter / X
+        </a>
+        <a href="#" class="contact-link">
+          <div class="contact-icon" style="background:#fce4ec">📧</div>
+          邮件联系
+        </a>
+      </div>
+    </div>
+
+    <div class="about-card">
+      <h3>📌 当前在做</h3>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot" style="background:#f59e0b"></div>
+          <div class="tl-content"><h4>website-builder</h4><p>一个网站构建工具，进行中</p></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:#a78bfa"></div>
+          <div class="tl-content"><h4>博弈论系列文章</h4><p>计划写 10 篇，已完成 2 篇</p></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:#3BBFC8"></div>
+          <div class="tl-content"><h4>AI 学习路线</h4><p>系统学习 Transformer 架构</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div><!-- /page-about -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo-mark" style="width:28px;height:28px;font-size:14px">🦊</div>
+      <strong>xiao9</strong>
+    </div>
+    <div class="footer-links">
+      <a href="#" onclick="showPage('home');return false">首页</a>
+      <a href="#" onclick="showPage('blog');return false">文章</a>
+      <a href="#" onclick="showPage('notes');return false">笔记</a>
+      <a href="#" onclick="showPage('about');return false">关于</a>
+      <a href="#">RSS</a>
+    </div>
+    <div class="footer-copy">© 2026-present xiao9 · 粤ICP备XXXXXXXX号</div>
+  </div>
+</footer>
+
+<script>
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  const navEl = document.getElementById('nav-' + name);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// notes tabs
+document.querySelectorAll('.notes-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.notes-tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
