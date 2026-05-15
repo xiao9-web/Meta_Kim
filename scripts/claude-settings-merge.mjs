@@ -108,11 +108,13 @@ const REPO_META_KIM_HOOK_FILES = [
   "post-format.mjs",
   "post-typecheck.mjs",
   "post-console-log-warn.mjs",
+  "post-ast-check.mjs",
   "subagent-context.mjs",
   "stop-compaction.mjs",
   "stop-memory-save.mjs",
   "stop-console-log-audit.mjs",
   "stop-completion-guard.mjs",
+  "stop-evolution.mjs",
 ];
 
 export function isRepoMetaKimHookCommand(command) {

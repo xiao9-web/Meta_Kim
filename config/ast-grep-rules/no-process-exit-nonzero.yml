@@ -1,0 +1,12 @@
+id: no-process-exit-nonzero
+language: JavaScript
+message: "Hook exits with non-zero code — this will block the operation. Use process.exitCode instead for non-blocking signals."
+severity: warning
+rule:
+  pattern: process.exit($CODE)
+  inside:
+    kind: program
+  not:
+    any:
+      - has:
+          pattern: process.exit(0)

@@ -50,7 +50,11 @@
     "meta:verify:all:live": "npm run meta:check && npm run meta:graphify:check && npm run meta:check:global && node scripts/eval-meta-agents.mjs --require-all-runtimes --live && npm run meta:test:setup && npm run meta:test:meta-theory",
     "meta:setup:install": "node setup.mjs",
     "meta:setup:update": "node setup.mjs --update",
-    "meta:setup:check": "node setup.mjs --check"
+    "meta:setup:check": "node setup.mjs --check",
+    "meta:evolve": "node scripts/evolution-engine.mjs",
+    "meta:evolve:dry": "node scripts/evolution-engine.mjs --dry-run",
+    "meta:mem0:search": "python3 scripts/mem0-bridge.py --search",
+    "meta:mem0:list": "python3 scripts/mem0-bridge.py --list"
   },
   "keywords": [
     "claude-code",
@@ -85,8 +89,13 @@
     "node": ">=22.13.0"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.52.0",
     "@inquirer/prompts": "^8.4.1",
     "@modelcontextprotocol/sdk": "^1.27.1",
     "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@ast-grep/napi": "^0.38.0"
   }
 }

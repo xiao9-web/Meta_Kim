@@ -240,6 +240,23 @@ async function main() {
       decisions_count: analysis.decisions.length,
     },
   });
+
+  // Also persist to mem0 if the bridge is available (fire-and-forget)
+  try {
+    const { spawn } = await import("node:child_process");
+    const bridgePath = new URL(
+      "../../../../../../scripts/mem0-bridge.py",
+      import.meta.url,
+    ).pathname;
+    const escapedContent = content.replace(/"/g, '\\"');
+    spawn(
+      "python3",
+      [bridgePath, "--content", content, "--tags", tags.join(",")],
+      { detached: true, stdio: "ignore" },
+    ).unref();
+  } catch {
+    // mem0 not available — skip silently
+  }
 }
 
 main().catch(() => {});

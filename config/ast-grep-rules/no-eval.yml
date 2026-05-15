@@ -1,0 +1,14 @@
+id: no-eval
+language: JavaScript
+message: "Avoid eval() — arbitrary code execution risk"
+severity: error
+rule:
+  any:
+    - pattern: eval($CODE)
+    - pattern: new Function($$$ARGS)
+    - pattern: setTimeout($CODE, $$$)
+      inside:
+        kind: call_expression
+        has:
+          field: arguments
+          kind: string

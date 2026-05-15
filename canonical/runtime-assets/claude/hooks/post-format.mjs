@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 /**
- * PostToolUse hook: auto-format JS/TS files after Edit/Write
- * Runs prettier on the modified file if it's a .js/.ts/.jsx/.tsx file
+ * PostToolUse hook: auto-format JS/TS/JSON files after Edit/Write
+ * Tries biome first (10-100x faster than prettier), falls back to prettier.
  *
  * Input: JSON on stdin (Claude Code hooks). See https://code.claude.com/docs/en/hooks
  */
@@ -16,14 +16,30 @@ const toolName = input.tool_name || "";
 const filePath = extractFilePath(input.tool_input || input);
 
 if (!["Edit", "Write"].includes(toolName)) process.exit(0);
-if (!filePath.match(/\.(js|ts|jsx|tsx|mjs|cjs)$/)) process.exit(0);
+if (!filePath.match(/\.(js|ts|jsx|tsx|mjs|cjs|json)$/)) process.exit(0);
 
+const cwd = input.cwd || process.cwd();
+
+let formatted = false;
 try {
-  execSync(`npx prettier --write "${filePath}"`, {
+  execSync(`npx @biomejs/biome format --write "${filePath}"`, {
     stdio: "ignore",
     timeout: 10000,
-    cwd: input.cwd || process.cwd(),
+    cwd,
   });
+  formatted = true;
 } catch {
-  // prettier not available or failed — no big deal
+  // biome not available — fall back to prettier
+}
+
+if (!formatted) {
+  try {
+    execSync(`npx prettier --write "${filePath}"`, {
+      stdio: "ignore",
+      timeout: 10000,
+      cwd,
+    });
+  } catch {
+    // neither available — skip silently
+  }
 }
