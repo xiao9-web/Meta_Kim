@@ -20,8 +20,7 @@
  * Always exits 0.
  */
 
-import { promises as fs } from "node:fs";
-import { existsSync } from "node:fs";
+import { promises as fs, existsSync, openSync, closeSync } from "node:fs";
 import { spawn } from "node:child_process";
 import path from "node:path";
 import process from "node:process";
@@ -187,14 +186,29 @@ async function countUnsynthesized(evoDir) {
 	}
 }
 
-function spawnEngineBackground(enginePath) {
+function spawnEngineBackground(enginePath, logPath) {
 	try {
-		const child = spawn(process.execPath, [enginePath], {
-			detached: true,
-			stdio: "ignore",
-			env: { ...process.env },
-		});
-		child.unref();
+		// Use nohup-style redirect so the child survives session boundary.
+		// stdio: 'ignore' is not officially guaranteed to persist after Stop hook
+		// exits — writing to a real log file is more reliable.
+		const isWin = process.platform === "win32";
+		if (isWin) {
+			// Windows: cmd /c start /B node engine.mjs
+			spawn("cmd", ["/c", "start", "/B", process.execPath, enginePath], {
+				detached: true,
+				stdio: "ignore",
+				env: { ...process.env },
+			}).unref();
+		} else {
+			// Unix: open log file so child has a real fd, then unref
+			const fd = openSync(logPath, "a");
+			spawn(process.execPath, [enginePath], {
+				detached: true,
+				stdio: ["ignore", fd, fd],
+				env: { ...process.env },
+			}).unref();
+			closeSync(fd);
+		}
 		return true;
 	} catch {
 		return false;
@@ -282,7 +296,14 @@ async function main() {
 	const enginePath = path.join(REPO_ROOT, "scripts", "evolution-engine.mjs");
 	if (!existsSync(enginePath)) return;
 
-	const launched = spawnEngineBackground(enginePath);
+	const logPath = path.join(
+		REPO_ROOT,
+		".meta-kim",
+		"state",
+		profile,
+		"evolution-engine.log",
+	);
+	const launched = spawnEngineBackground(enginePath, logPath);
 	if (launched) {
 		process.stderr.write(
 			`[evolution] auto-synthesis launched (${pending} packets >= threshold ${threshold})\n`,
