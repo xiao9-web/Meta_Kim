@@ -303,7 +303,7 @@ ${r ? `Raw error: ${r}` : ""}
     platformOpenClawCap: "workspace + skills",
     platformCursor: "Cursor",
     platformCursorCap: "agents + skills",
-    postInstallNotesLayerActivation: "Three-layer memory activation:",
+    postInstallNotesLayerActivation: "Four-layer memory activation:",
     layer1Label: "Layer 1 (Memory)",
     layer1Note: "automatic — built into Claude Code",
     layer2Label: "Layer 2 (Graphify)",
@@ -311,6 +311,8 @@ ${r ? `Raw error: ${r}` : ""}
     layer3Label: "Layer 3 (SQL / MCP Memory Service)",
     layer3Note:
       "requires server startup: python -m mcp_memory_service (then http://localhost:8000)",
+    layer4Label: "Layer 4 (mem0 + Evolution Engine)",
+    layer4Note: "automatic after setup — semantic session memory + pattern synthesis",
     installLocationsHeading: "Installation locations:",
     installLocationsProject: "Project-level (this directory)",
     installLocationsGlobal: "Global-level (shared across projects)",
@@ -440,6 +442,13 @@ Possible causes:
     graphifyHookInstalled:
       "graphify git hooks installed (auto-rebuild on commit/checkout)",
     graphifyHookFailed: "graphify git hook installation failed (non-blocking)",
+    mem0Installing: "Installing mem0 (semantic session memory)...",
+    mem0Installed: "mem0 installed — semantic search over session memory enabled",
+    mem0AlreadyInstalled: (v) => `mem0 ${v} — already installed`,
+    mem0InstallFailed: "mem0 installation failed (non-blocking — run: pip install mem0ai)",
+    mem0Upgrading: "Upgrading mem0 to latest version...",
+    mem0Upgraded: (v) => `mem0 upgraded to ${v}`,
+    mem0UpgradeFailed: "mem0 upgrade failed (non-blocking)",
     stepMcpMemory: "MCP Memory Service (Layer 3)",
     mcpMemoryInstalling: "Installing MCP Memory Service (Layer 3)...",
     mcpMemoryInstalled: "MCP Memory Service installed",
@@ -764,7 +773,7 @@ ${r ? `原始错误：${r}` : ""}
     platformOpenClawCap: "workspace + skills",
     platformCursor: "Cursor",
     platformCursorCap: "agents + skills",
-    postInstallNotesLayerActivation: "三层记忆激活方式：",
+    postInstallNotesLayerActivation: "四层记忆激活方式：",
     layer1Label: "第一层（Memory）",
     layer1Note: "自动激活——内置于 Claude Code",
     layer2Label: "第二层（Graphify）",
@@ -772,6 +781,8 @@ ${r ? `原始错误：${r}` : ""}
     layer3Label: "第三层（SQL / MCP Memory Service）",
     layer3Note:
       "需手动启动服务器：python -m mcp_memory_service（然后访问 http://localhost:8000）",
+    layer4Label: "第四层（mem0 + 进化引擎）",
+    layer4Note: "安装后自动激活——语义会话记忆 + 模式合成",
     installLocationsHeading: "安装位置：",
     installLocationsProject: "项目级（当前目录）",
     installLocationsGlobal: "全局级（跨项目共享）",
@@ -890,6 +901,13 @@ ${r ? `原始错误：${r}` : ""}
     graphifyHookInstalled:
       "graphify git hook 已安装（commit/checkout 时自动重建图谱）",
     graphifyHookFailed: "graphify git hook 安装失败（不影响其他功能）",
+    mem0Installing: "正在安装 mem0（语义会话记忆）...",
+    mem0Installed: "mem0 已安装——支持对会话记忆进行语义搜索",
+    mem0AlreadyInstalled: (v) => `mem0 ${v} — 已安装`,
+    mem0InstallFailed: "mem0 安装失败（不影响其他功能——可手动运行：pip install mem0ai）",
+    mem0Upgrading: "正在升级 mem0 至最新版本...",
+    mem0Upgraded: (v) => `mem0 已升级至 ${v}`,
+    mem0UpgradeFailed: "mem0 升级失败（不影响其他功能）",
     stepMcpMemory: "MCP Memory Service（第三层）",
     mcpMemoryInstalling: "正在安装 MCP Memory Service（第三层）...",
     mcpMemoryInstalled: "MCP Memory Service 已安装",
@@ -1213,7 +1231,7 @@ ${r ? `生エラー：${r}` : ""}
     platformOpenClawCap: "workspace + skills",
     platformCursor: "Cursor",
     platformCursorCap: "agents + skills",
-    postInstallNotesLayerActivation: "3層メモリの有効化方法：",
+    postInstallNotesLayerActivation: "4層メモリの有効化方法：",
     layer1Label: "第1層（Memory）",
     layer1Note: "自動有効 — Claude Code に組み込み済み",
     layer2Label: "第2層（Graphify）",
@@ -1221,6 +1239,8 @@ ${r ? `生エラー：${r}` : ""}
     layer3Label: "第3層（SQL / MCP Memory Service）",
     layer3Note:
       "サーバー手動起動が必要：python -m mcp_memory_service（次に http://localhost:8000 にアクセス）",
+    layer4Label: "第4層（mem0 + 進化エンジン）",
+    layer4Note: "セットアップ後自動有効 — セマンティックセッションメモリ + パターン合成",
     installLocationsHeading: "インストール先：",
     installLocationsProject: "プロジェクトレベル（このディレクトリ）",
     installLocationsGlobal: "グローバルレベル（プロジェクト間で共有）",
@@ -1349,6 +1369,13 @@ ${r ? `生エラー：${r}` : ""}
     graphifyHookInstalled:
       "graphify git hookインストール完了（commit/checkout時に自動再構築）",
     graphifyHookFailed: "graphify git hookインストール失敗（非ブロッキング）",
+    mem0Installing: "mem0 をインストール中（セマンティックセッションメモリ）...",
+    mem0Installed: "mem0 インストール完了 — セッションメモリへのセマンティック検索が有効",
+    mem0AlreadyInstalled: (v) => `mem0 ${v} — インストール済み`,
+    mem0InstallFailed: "mem0 インストール失敗（非ブロッキング — 手動実行：pip install mem0ai）",
+    mem0Upgrading: "mem0 を最新バージョンにアップグレード中...",
+    mem0Upgraded: (v) => `mem0 ${v} にアップグレード完了`,
+    mem0UpgradeFailed: "mem0 アップグレード失敗（非ブロッキング）",
     stepMcpMemory: "MCP Memory Service（第三層）",
     mcpMemoryInstalling: "MCP Memory Service（第三層）をインストール中...",
     mcpMemoryInstalled: "MCP Memory Service がインストールされました",
@@ -1690,7 +1717,7 @@ ${r ? `원본 오류：${r}` : ""}
     platformOpenClawCap: "workspace + skills",
     platformCursor: "Cursor",
     platformCursorCap: "agents + skills",
-    postInstallNotesLayerActivation: "3층 메모리 활성화 방식:",
+    postInstallNotesLayerActivation: "4층 메모리 활성화 방식:",
     layer1Label: "제1층 (Memory)",
     layer1Note: "자동 활성화 — Claude Code에 내장됨",
     layer2Label: "제2층 (Graphify)",
@@ -1698,6 +1725,8 @@ ${r ? `원본 오류：${r}` : ""}
     layer3Label: "제3층 (SQL / MCP Memory Service)",
     layer3Note:
       "서버 수동 시작 필요: python -m mcp_memory_service (그러면 http://localhost:8000 에 접속)",
+    layer4Label: "제4층 (mem0 + 진화 엔진)",
+    layer4Note: "설치 후 자동 활성화 — 시맨틱 세션 메모리 + 패턴 합성",
     installLocationsHeading: "설치 위치:",
     installLocationsProject: "프로젝트 레벨 (현재 디렉터리)",
     installLocationsGlobal: "전역 레벨 (프로젝트 간 공유)",
@@ -1821,6 +1850,13 @@ ${r ? `원본 오류：${r}` : ""}
     graphifyHookInstalled:
       "graphify git hook 설치 완료 (commit/checkout 시 자동 재구축)",
     graphifyHookFailed: "graphify git hook 설치 실패 (비차단)",
+    mem0Installing: "mem0 설치 중 (시맨틱 세션 메모리)...",
+    mem0Installed: "mem0 설치 완료 — 세션 메모리 시맨틱 검색 활성화됨",
+    mem0AlreadyInstalled: (v) => `mem0 ${v} — 이미 설치됨`,
+    mem0InstallFailed: "mem0 설치 실패 (비차단 — 수동 실행: pip install mem0ai)",
+    mem0Upgrading: "mem0 최신 버전으로 업그레이드 중...",
+    mem0Upgraded: (v) => `mem0 ${v}로 업그레이드 완료`,
+    mem0UpgradeFailed: "mem0 업그레이드 실패 (비차단)",
     stepMcpMemory: "MCP Memory Service（3층）",
     mcpMemoryInstalling: "MCP Memory Service（3층） 설치 중...",
     mcpMemoryInstalled: "MCP Memory Service 설치 완료",
@@ -3389,7 +3425,13 @@ async function autoConfigure(installScope = "project") {
 // ── Step 4: npm install + skills ────────────────────────
 
 function installDeps() {
-  if (existsSync(join(PROJECT_DIR, "node_modules", "@modelcontextprotocol"))) {
+  const hasCore = existsSync(
+    join(PROJECT_DIR, "node_modules", "@modelcontextprotocol"),
+  );
+  const hasNewDeps =
+    existsSync(join(PROJECT_DIR, "node_modules", "@biomejs", "biome")) &&
+    existsSync(join(PROJECT_DIR, "node_modules", "@anthropic-ai", "sdk"));
+  if (hasCore && hasNewDeps) {
     if (!updateMode) {
       skip(t.nodeModulesExist);
       return true;
@@ -3710,6 +3752,48 @@ async function installPythonTools(activeTargets, inUpdateMode = false) {
       ok(t.graphifySkillRegistered(platform));
     } else {
       warn(t.graphifySkillFailed(platform));
+    }
+  }
+
+  // ── mem0: semantic session memory (Layer 4) ─────────────
+  const mem0Show = runPythonModule(python, ["-m", "pip", "show", "mem0ai"]);
+  if (mem0Show.status === 0) {
+    const mem0Version =
+      extractPipShowVersion(readProcessText(mem0Show)) ?? "unknown";
+    if (inUpdateMode) {
+      info(t.mem0Upgrading);
+      const upResult = runPythonModule(
+        python,
+        ["-m", "pip", "install", "--upgrade", "mem0ai"],
+        undefined,
+        { stdio: "pipe" },
+      );
+      if (upResult.status === 0) {
+        const newVer =
+          extractPipShowVersion(readProcessText(upResult)) ?? mem0Version;
+        ok(t.mem0Upgraded(newVer));
+      } else {
+        warn(t.mem0UpgradeFailed);
+      }
+    } else {
+      ok(t.mem0AlreadyInstalled(mem0Version));
+    }
+  } else {
+    info(t.mem0Installing);
+    const installResult = runPythonModule(
+      python,
+      ["-m", "pip", "install", "mem0ai"],
+      undefined,
+      { stdio: "pipe" },
+    );
+    if (installResult.status === 0) {
+      ok(t.mem0Installed);
+    } else {
+      const stderr = readProcessText(installResult);
+      warn(t.mem0InstallFailed);
+      if (stderr) {
+        console.log(`${C.dim}${t.pipErrorDetail(stderr)}${C.reset}`);
+      }
     }
   }
 }
@@ -4550,6 +4634,7 @@ function showNextSteps(runtimes) {
   console.log(`${C.dim}${t.layer1Label} — ${t.layer1Note}${C.reset}`);
   console.log(`${C.dim}${t.layer2Label} — ${t.layer2Note}${C.reset}`);
   console.log(`${C.dim}${t.layer3Label} — ${t.layer3Note}${C.reset}`);
+  console.log(`${C.dim}${t.layer4Label} — ${t.layer4Note}${C.reset}`);
   console.log("");
   console.log(`${C.bold}${C.cyan}● ${t.installLocationsHeading}${C.reset}`);
   console.log(
